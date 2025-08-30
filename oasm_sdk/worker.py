@@ -1,7 +1,7 @@
 from datetime import datetime
-from models import WorkerAliveResponse, WorkerJoinResponse
-from client import Client
-from exceptions import raise_for_error, APIError
+from .models import WorkerAliveResponse, WorkerJoinResponse
+from .client import Client
+from .exceptions import raise_for_error, APIError
 
 
 def worker_alive(client: Client, token: str) -> WorkerAliveResponse:

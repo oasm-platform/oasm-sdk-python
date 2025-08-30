@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
-from client import Client
-from exceptions import APIError
+from oasm_sdk.client import Client
+from oasm_sdk.exceptions import APIError
 
 class TestClientCoreMethods(unittest.TestCase):
     """

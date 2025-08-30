@@ -4,7 +4,7 @@ from requests.sessions import Session
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
-from exceptions import APIError, raise_for_error
+from .exceptions import APIError, raise_for_error
 
 Option = Callable[["Client"], None]
 
