@@ -46,7 +46,9 @@ class TestWorkerMethods(unittest.TestCase):
         """
         # Mock a failed API response
         mock_post.return_value.status_code = 401
-        mock_post.return_value.json.return_value = {
+        # Create a mock for the json method
+        mock_json = mock_post.return_value.json
+        mock_json.return_value = {
             "message": "Invalid API key",
             "error": "AuthenticationError",
             "statusCode": 401
@@ -79,7 +81,9 @@ class TestWorkerMethods(unittest.TestCase):
         """
         # Mock a failed API response
         mock_post.return_value.status_code = 400
-        mock_post.return_value.json.return_value = {
+        # Create a mock for the json method
+        mock_json = mock_post.return_value.json
+        mock_json.return_value = {
             "message": "Invalid worker token",
             "error": "InvalidRequestError",
             "statusCode": 400

@@ -36,7 +36,7 @@ class TestClientCoreMethods(unittest.TestCase):
         with self.assertRaises(APIError) as cm:
             client.health()
         
-        self.assertIn("Health check failed", str(cm.exception))
+        self.assertEqual(cm.exception.status_code, 500)
 
     @patch("requests.sessions.Session.get")
     def test_health_failure_network_error(self, mock_get):

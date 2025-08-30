@@ -4,6 +4,8 @@ from requests.sessions import Session
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
+from exceptions import APIError, raise_for_error
+
 Option = Callable[["Client"], None]
 
 def with_api_url(api_url: str) -> Option:
@@ -88,3 +90,23 @@ class Client:
 
         for opt in opts:
             opt(self)
+            
+    def health(self) -> bool:
+        """
+        Checks the health status of the API.
+        
+        Returns:
+            True if the API is healthy, False otherwise.
+            
+        Raises:
+            APIError: If there's a network error or the API returns an error status.
+        """
+        url = f"{self.api_url}/api/health"
+        try:
+            resp = self.session.get(url)
+            raise_for_error(resp)
+            return resp.text.strip() == "OK"
+        except Exception as e:
+            if isinstance(e, APIError):
+                raise
+            raise APIError(message=f"Health check failed: {e}") from e

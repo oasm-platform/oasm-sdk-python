@@ -1,8 +1,7 @@
 from datetime import datetime
 from models import WorkerAliveResponse, WorkerJoinResponse
-from core import Client
+from client import Client
 from exceptions import raise_for_error, APIError
-
 
 
 def worker_alive(client: Client, token: str) -> WorkerAliveResponse:
@@ -26,6 +25,8 @@ def worker_alive(client: Client, token: str) -> WorkerAliveResponse:
         raise_for_error(resp)
         return WorkerAliveResponse(**resp.json())
     except Exception as e:
+        if isinstance(e, APIError):
+            raise
         raise APIError(message=f"Worker alive request failed: {e}") from e
 
 def worker_join(client: Client) -> WorkerJoinResponse:
@@ -62,4 +63,6 @@ def worker_join(client: Client) -> WorkerJoinResponse:
             scope=response_data.get("scope", "")
         )
     except Exception as e:
+        if isinstance(e, APIError):
+            raise
         raise APIError(message=f"Worker join request failed: {e}") from e

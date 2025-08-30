@@ -27,7 +27,10 @@ def raise_for_error(response) -> None:
             error_type=error_data.get("error", "Unknown"),
             status_code=response.status_code
         )
-    except Exception:
+    except Exception as e:
+        # Only catch exceptions that are not APIError
+        if isinstance(e, APIError):
+            raise
         raise APIError(
             message=f"Failed to parse error response. Status code: {response.status_code}",
             status_code=response.status_code
