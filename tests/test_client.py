@@ -1,5 +1,5 @@
 import unittest
-from oasm_sdk.client import Client, with_api_url, with_api_key, with_session
+from oasm_sdk import Client, with_api_url, with_api_key, with_session
 from requests.sessions import Session
 
 class TestClient(unittest.TestCase):

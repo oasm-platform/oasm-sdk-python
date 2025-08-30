@@ -6,7 +6,7 @@ from urllib3.util import Retry
 
 Option = Callable[["Client"], None]
 
-def WithApiUrl(api_url: str) -> Option:
+def with_api_url(api_url: str) -> Option:
     """Sets the base API URL for the Client."""
     def option(c: "Client") -> None:    
         if not api_url:
@@ -17,7 +17,7 @@ def WithApiUrl(api_url: str) -> Option:
         c.api_url = api_url.rstrip('/')
     return option
 
-def WithApiKey(api_key: str) -> Option:
+def with_api_key(api_key: str) -> Option:
     """Sets the API key for the Client."""
     def option(c: "Client") -> None:
         if not api_key:
@@ -25,7 +25,7 @@ def WithApiKey(api_key: str) -> Option:
         c.api_key = api_key
     return option
 
-def WithRequest(session: Session) -> Option:
+def with_request(session: Session) -> Option:
     """Sets a custom requests session for the Client."""
     def option(c: "Client") -> None:
         if not isinstance(session, Session):
@@ -43,8 +43,9 @@ class Client:
         Creates a new Client instance with the given options.
         Example:
             client = Client(
-                WithApiUrl("https://api.example.com"),
-                WithApiKey("my-secret-key")
+                with_api_url("https://api.example.com"),
+                with_api_key("my-secret-key"),
+                with_request(Session())
             )
         The functional options allow you to configure the client in a flexible and extensible way.
         """
