@@ -1,6 +1,5 @@
 from oasm_sdk.client import Client, with_api_url, with_api_key
 from oasm_sdk.worker import worker_join, worker_alive
-import time
 
 def main():
     # Initialize the client with API credentials
